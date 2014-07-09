@@ -1,0 +1,49 @@
+= hook(:project_top_section, self, :f => f) do
+  .section
+    %table
+      %tr
+        %td
+          .label.req.top #{t :name}:
+          = f.text_field :name, :style => "width:325px"
+
+    %table{ :border => 0, :width => 500, :cellpadding => 0, :cellspacing => 0 }
+      %tr
+        %td
+          .label.req.top #{t :status}:
+          = f.select :status, @status, { :selected => @project.status ? @project.status.to_sym : nil }, { :style => "width:160px" }
+        %td
+          .label.top #{t :category}:
+          = f.select :category, @category, { :selected => @project.category.blank? ? nil : @project.category.to_sym, :include_blank => t(:select_blank) }, { :style => "width:160px" }
+        %td
+          .label.top #{t :cost_estimate} #{t :currency}:
+          = f.text_field :cost_estimate, :style => "width:110px; text-align:right;"
+
+    = fields_for(@account) do |a|
+      = a.hidden_field :user_id
+      = a.hidden_field :access
+      = a.hidden_field :assigned_to
+      %table
+        %tr
+          %td
+            != account_select_or_create(a) do |options|
+              - options[:selected] = @account.id || 0
+              - options[:include_blank] = true #t(:select_none) unless @project.new_record? || @project.account.blank?
+        %tr
+          %td
+            .label #{t :assigned_to}:
+            = project_assignees_select
+        %tr
+          %td
+            .label #{t :contacts}:
+            = project_contacts_select
+
+        - if Setting.background_info && Setting.background_info.include?(:project)
+          %tr
+            %td(colspan="3")
+              .label= t(:background_info) << ':'
+              = f.text_area :background_info, :style =>"width:500px", :rows => 3
+
+        = render :partial => "/shared/tags", :locals => {:f => f, :span => 3}
+
+        = hook(:project_top_section_bottom, self, :f => f)
+

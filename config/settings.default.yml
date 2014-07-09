@@ -1,0 +1,33 @@
+:projects:
+  :tab:
+    :active: false
+    :text: :tab_projects
+    :icon: :fa-folder
+    :url:
+      :controller: projects
+
+project_category:
+  - :design
+  - :custom_programming
+  - :store_setup
+  - :store_administrator
+
+project_category_color:
+  :design: Silver
+  :custom_programming: Turquoise
+  :store_setup: Gold
+  :store_administrator: Tomato
+
+project_status:
+  - :active
+  - :completed
+  - :billed
+  - :suspended
+  - :cancelled
+
+project_status_color:
+  :active: Silver
+  :completed: Turquoise
+  :billed: Green
+  :suspended: Gold
+  :cancelled: Tomato

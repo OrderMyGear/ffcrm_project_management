@@ -1,0 +1,28 @@
+%li.highlight[assignee]
+  = avatar_for(assignee, :size => "30x30")
+
+  %ul.tools
+    = hook(:assignee_tools_before, self, :assignee => assignee)
+
+    - if shown_on_landing_page?
+      %li= link_to_discard(assignee)
+
+  .indentslim
+    = link_to_if can?(:read, assignee), assignee.full_name, assignee
+
+    %dt{ :style => "padding: 2px 0px 0px 0px" }
+      - if can?(:read, assignee)
+        - if assignee.email.present?
+          = link_to_email(assignee.email)
+          |
+        - if assignee.phone.present?
+          == #{t :phone_small}:
+          %b= assignee.phone
+        |
+        - if assignee.mobile.present?
+          == #{t :mobile_small}:
+          %b= assignee.mobile
+          |
+      = t(:added_ago, value: timeago(assignee.created_at)).html_safe
+
+    = hook(:assignee_bottom, self, :assignee => assignee)

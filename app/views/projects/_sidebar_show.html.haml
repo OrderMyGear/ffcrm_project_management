@@ -1,0 +1,48 @@
+.panel#summary
+  .caption #{t :project_summary}
+  %li
+    %dt= @project.status ? t(@project.status) : t(:other)
+    %tt #{t :status}:
+  %li
+    %dt= @project.cost_estimate ? number_to_currency(@project.cost_estimate || 0, :precision => 0) : t(:n_a)
+    %tt #{t :cost_estimate}:
+  %li{ :style => 'overflow: hidden;' }
+    %dt
+      - if @project.assignees.length > 0
+        %ul.list
+          - @project.assignees.each do |assignee|
+            %li{ :class => "#{@project.assignees.last == assignee ? 'last' : nil}" }
+              = link_to(truncate(assignee.full_name, :length => 16), assignee, :title => assignee.full_name)
+      - else
+        = t :no_assignees
+    %tt #{t :assigned_to}:
+  - if @project.attachments.length > 0
+    %li{ :style => 'overflow: hidden;' }
+      %dt
+        - if @project.attachments.length > 0
+          %ul.list
+            - @project.attachments.each do |attachment|
+              %li{ :class => "#{@project.attachments.last == attachment ? 'last' : nil}" }
+                = link_to(truncate(attachment.attachment_file_name, :length => 16), attachment, :title => attachment.attachment_file_name)
+      %tt #{t :attachments}:
+  %li
+    %dt
+      - if @project.account
+        = link_to(truncate(@project.account.name, :length => 16), @project.account, :title => @project.account.name)
+      - else
+        #{t :n_a}
+    %tt #{t :account}:
+
+  - unless @project.background_info.blank?
+    .caption #{t :background_info}
+    = auto_link(simple_format @project.background_info).html_safe
+
+  %li.last
+    = render "fields/sidebar_show", :asset => @project
+
+  - if @project.tag_list.present?
+    %dt
+      .tags
+        = tags_for_index(@project)
+
+  = hook(:show_project_sidebar_bottom, self, :project => @project)

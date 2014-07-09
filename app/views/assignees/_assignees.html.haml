@@ -1,0 +1,8 @@
+
+= section_without_create(object, :users)
+
+.list#users
+  - assignees = object.assignees.order('updated_at desc').paginate(:page => 1, :per_page => 20)
+  = render partial: 'assignees/assignee', collection: assignees
+
+= paginate(collection: assignees, id: 'assignees_pagination', params: { action: 'assignees' } )

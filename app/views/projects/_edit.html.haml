@@ -1,0 +1,17 @@
+.remote
+  = simple_form_for(@project, :html => one_submit_only, :remote => true) do |f|
+    = link_to_close edit_project_path(@project)
+    = f.hidden_field :user_id
+
+    = f.error_messages :object_name => t('project')
+
+    = render "projects/top_section", :f => f, :edit => true
+    = render "fields/edit_custom_field_group", :f => f, :edit => true
+    = render "attachments/attachments_new", f: f, :edit => true
+    = render "fields/groups",  :f => f, :edit => true
+    = render "entities/permissions", :f => f, :edit => true, :entity => @project
+
+    .buttonbar
+      = f.submit t(:save_project), :onclick => %/$("#account_assigned_to").val($("#project_assigned_to").val());/
+      #{t :or}
+      = link_to_cancel edit_project_path(@project)

@@ -1,0 +1,20 @@
+.filters#filters
+  .caption= t :project_statuses
+  - @status.each do |value, key|
+    .check_box{:style => "border-bottom: 1px silver dotted;"}
+      %div{:style => "float:right;"}
+        = @project_status_total[key]
+      = project_status_checkbox(key, @project_status_total[key])
+      = label_tag(key, value)
+
+  .check_box{:style => "border-bottom: 1px silver dotted;"}
+    %div{:style => "float:right;"}
+      = @project_status_total[:other]
+    = project_status_checkbox("other", @project_status_total[:other])
+    = label_tag(:other, t(:other))
+
+  .check_box
+    %div{:style => "float:right;"}
+      %b= @project_status_total[:all]
+    %b #{t :total_projects}
+  = hook(:index_project_sidebar_bottom, self)

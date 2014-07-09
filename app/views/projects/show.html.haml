@@ -1,0 +1,24 @@
+- if (template = template_for_current_view)
+  = render(template, :project => @project)
+- else
+
+  -# default view
+
+  = styles_for :task, :contact
+
+  = render 'projects/title_bar', :project => @project
+
+  = render "comments/new", :commentable => @project
+  = render :partial => "shared/timeline", :collection => @timeline
+
+  = hook(:show_project_bottom, self) do
+
+    = render "tasks/tasks", :object => @project
+
+    = render "contacts/contacts", :object => @project
+
+    = render "assignees/assignees", :object => @project
+
+    = render "versions/versions", :object => @project
+
+    = load_select_popups_for(@project, :tasks, :contacts, :users)

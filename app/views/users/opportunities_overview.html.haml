@@ -1,0 +1,23 @@
+= styles_for :opportunity
+
+#create_opportunity{ hidden }
+
+- if @users_with_opportunities_and_projects.all.any? || @unassigned_opportunities.all.any? || @unassigned_projects.all.any?
+  %ul
+    = render :partial => "user_report", :collection => @users_with_opportunities_and_projects
+    - if @unassigned_opportunities.all.any?
+      #unassigned
+        .title
+          %span#title
+            = t(:unassigned_opportunities)
+        %ul.list#opportunities
+          = render :partial => "opportunities/opportunity", :collection => @unassigned_opportunities
+    - if @unassigned_projects.all.any?
+      #unassigned
+        .title
+          %span#title
+            = t(:unassigned_projects)
+        %ul.list#products
+          = render :partial => "projects/project", :collection => @unassigned_projects
+- else
+  = t(:no_opportunities_or_projects_found)

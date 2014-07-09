@@ -1,0 +1,43 @@
+# Sample localization file for English. Add more files in this directory for other locales.
+# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
+
+en:
+  tab_projects: Projects
+  projects: Projects
+  project: Project
+  subject_project: project
+  unassigned_projects: Unassigned Projects
+  no_opportunities_or_projects_found: No opportunities or projects found
+  confirm_project_delete: Are you sure you want to delete the project "%{project_name}"?
+  active: Active
+  completed: Completed
+  suspended: Suspended
+  cancelled: Cancelled
+  billed: Billed
+  design: Design
+  custom_programming: Custom Programming
+  store_setup: Store Setup
+  store_administrator: Store Administrator
+  create_project: Create Project
+  select_project: Select Project
+  select_a_project: Select Project
+  select_a_user: Select User
+  select_a_contact: Select Contact
+  cost_estimate: Const Estimate
+  project_statuses: Project Statuses
+  project_summary: Project Summary
+  save_project: Save Project
+  update_project: Update Project
+  select_user: Select User
+  total_projects: Total Projects
+  my_projects: My Projects
+  no_project_records: You have no projects
+  project_small: project
+
+  active_record:
+    errors:
+        models:
+          project:
+            attributes:
+              access:
+                share_project: '^Please specify users to share the project with.'

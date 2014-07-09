@@ -1,0 +1,5 @@
+- if (params['controller'] == 'assignees') and (template = template_for_current_view).present?
+  = render(template, :assignee => assignee)
+- else
+  -# default view
+  = render 'assignees/index_long', :assignee => assignee

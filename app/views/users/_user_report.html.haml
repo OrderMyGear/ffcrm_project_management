@@ -1,0 +1,16 @@
+%li{:id => dom_id(user_report)}
+  .title
+    %span#title
+      = user_report.full_name
+  - if (opportunities = user_report.assigned_opportunities.pipeline.preload([:account, :user, :assignee]).order("opportunities.amount DESC").all).any?
+    %ul.list#opportunities{style: 'margin-left: 15px;'}
+      %li.title
+        %h3 #{t :opportunities}
+      = render :partial => "opportunities/opportunity",
+        :collection => opportunities
+  - if (projects = user_report.projects.preload([:user, :account, :assignees]).order("projects.cost_estimate DESC").all).any?
+    %ul.list#projects{style: 'margin-left: 15px;'}
+      %li.title
+        %h3 #{t :projects}
+      = render :partial => "projects/project",
+        :collection => projects

@@ -1,0 +1,29 @@
+%li.highlight[project]
+  - if project.status
+    .strip{:class => project.status}= t(project.status)
+  - else
+    .strip.white #{t :other}
+
+  %ul.tools
+    - if can?(:update, project)
+      %li= link_to_edit(project)
+
+    - if shown_on_landing_page?
+      %li= link_to_discard(project)
+
+    - if can?(:destroy, project)
+      %li= link_to_delete(project, confirm: t(:confirm_project_delete, project_name: project.name))
+
+  .indent
+    = link_to_if can?(:read, project), project.name, project
+    - if (account = project.account) && account.id
+      == #{t :from} #{link_to_if can?(:read, account), account.name, account_path(account)}
+    %tt
+      &ndash;
+      - user_name = project.user.try(:full_name)
+      - if user_name
+        = t(:added_by, :time_ago => timeago(project.created_at), :user => h(user_name)).html_safe
+      - else
+        = t(:added_ago, :value => timeago(project.created_at)).html_safe
+
+    = hook(:project_bottom, self, :project => project)
